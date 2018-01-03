@@ -29,6 +29,19 @@
 	<p>
 		<img src="http://cdn.tgp.qq.com/tgp/oss-images/oss_5a3ccb7228ac0.jpg">
 	</p>   
-
+	<script type="text/javascript">
+		
+		window.onload=function(){
+			var oul = document.querySelector("ul");
+			oul.addEventListener("click",function(e){
+				e.preventDefault();
+				var obj_a = e.target,
+					_href = obj_a.getAttribute("href"),
+					_img = document.querySelector("img");
+				_img.setAttribute("src",_href);
+				return false;
+			},true);
+		}
+	</script>
 </body>
 </html>
