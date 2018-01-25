@@ -67,10 +67,10 @@
         videoObj.currentTime = curTime;
       },
       vFast : function(videoObj,interTime){
-        videoObj.playbackRate *= interTime;
+        videoObj.playbackRate += interTime;
       },
       vSlow : function(videoObj,interTime){
-        videoObj.playbackRate *= interTime;
+        videoObj.playbackRate += interTime;
       },
       vVolUp : function(videoObj,interVol){
         if (interVol < 1 && interVol > 0) {
@@ -110,7 +110,7 @@
               videoOpt.vFast(playerBox,2);
               break;
         case "playSlow":
-              videoOpt.vSlow(playerBox,0.5);
+              videoOpt.vSlow(playerBox,-0.5);
               break;
         case "volUp":
               videoOpt.vVolUp(playerBox,0.1);
