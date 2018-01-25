@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Explaining the Document Object Model</title>
+  <style type="text/css">
+  #player{position: absolute;left: 50%;top: 50%;-webkit-transform:translate(-50%,-50%);border:1px solid #000;background-color: #000}
+  #player-controls{text-align: center;}
+  #player-controls a{display: inline-block;margin: 0 10px;color: #fff;}
+  </style>
+</head>
+
+<body>
+    <div id="player">
+      <video id="player-video" controls>
+        <source src="http://html5video-player.com/data/images/happyfit2.mp4" type="video/mp4">
+      </video>
+      <p id="player-controls">
+        <a href="#" id="play">播放</a>
+        <a href="#" id="skip">跳到视频第20秒</a>
+        <a href="#" id="playFast">快进</a>
+        <a href="#" id="playSlow">快退</a>
+        <a href="#" id="volUp">增大音量</a>
+        <a href="#" id="volDown">减小音量</a>
+        <a href="#" id="quite">禁音</a>
+      </p>
+    </div>
+  
+<script type="text/javascript">
+  // ronald-2018-1-25
+  window.onload = function(){
+    var playerControls = document.getElementById("player-controls"),
+      playerBox = document.getElementById("player-video");
+
+    // 监听事件兼容ie
+    var EventUtil ={
+      addHandler:function(element,type,handler){
+        if (element.addEventListener) {
+          element.addEventListener(type,handler,false);
+        }else if (element.attachEvent) {
+          element.attachEvent("on"+type,handler);
+        }else{
+          element["on"+type]=handler;
+        }
+      },
+      removehandler:function(element,type,handler){
+        if (element.removeEventListener) {
+          element.removeEventListener(type,handler,false);
+        }else if (element.detachEvent) {
+          element.detachEvent("on",+type,handler);
+        }else{
+          element["on"+type]=null;
+        }
+      }
+    };
+
+    // 视频操作按钮对象
+    var videoOpt = {
+      vPlay : function(videoObj){
+        if (videoObj.paused) {
+          videoObj.play();
+        }else{
+          videoObj.pause();
+        }
+      },
+      vSkip : function(videoObj,curTime){
+        videoObj.currentTime = curTime;
+      },
+      vFast : function(videoObj,interTime){
+        videoObj.currentTime += interTime;
+      },
+      vSlow : function(videoObj,interTime){
+        videoObj.currentTime -= interTime;
+      },
+      vVolUp : function(videoObj,interVol){
+        if (interVol < 1 && interVol > 0) {
+          videoObj.volume += interVol;
+        }else{
+          videoObj.volume = 1;
+        }
+      },
+      vVolDown : function(videoObj,interVol){
+        if (interVol < 1 && interVol > 0) {
+          videoObj.volume -= interVol;
+        }else{
+          videoObj.volume = 0;
+        }
+      },
+      vQuite : function(videoObj){
+        if (videoObj.muted) {
+          videoObj.muted = false;
+        }else{
+          videoObj.muted = true;
+        }
+      }
+    };
+
+    // 给按钮添加事件监听
+    EventUtil.addHandler(playerControls,"click",function(e){      
+      e.preventDefault();
+      // e.stopPropagation();
+      switch(e.target.id){
+        case "play":
+              videoOpt.vPlay(playerBox);
+              break;
+        case "skip":
+              videoOpt.vSkip(playerBox,20);
+              break;
+        case "playFast":
+              videoOpt.vFast(playerBox,2);
+              break;
+        case "playSlow":
+              videoOpt.vSlow(playerBox,2);
+              break;
+        case "volUp":
+              videoOpt.vVolUp(playerBox,0.1);
+              break;
+        case "volDown":
+              videoOpt.vVolDown(playerBox,0.1);
+              break;
+        case "quite":
+              videoOpt.vQuite(playerBox);
+              break;        
+        default :
+
+      }
+      
+    });
+
+    
+    
+  }
+  
+  // ronald-2018-1-25
+
+</script>
+
+</body>
+
+</html>
