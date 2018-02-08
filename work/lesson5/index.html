@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>banner</title>
+	<style type="text/css">
+		a{cursor: pointer;}
+		ul,li{list-style: none;margin: 0;padding: 0;}
+		.banner-switch{margin: auto;display: block;text-align: center}
+		.banner-wrap{width: 68px;height: 84px;overflow: hidden;margin: auto;position: relative;}
+		.banner-wrap ul{font-size: 0;position: absolute;top: 0;left: 0;transition: left .2s ease;width: 1000px;}
+		.banner-wrap li{display: inline-block;font-size: 0;float: left;}
+	</style>
+</head>
+
+<body>
+<div id="player">
+	<ul class="banner-switch">
+		<li><a data-img="0">HTML</a></li>
+		<li><a data-img="1">CSS</a></li>
+		<li><a data-img="2">DOM</a></li>
+	</ul>
+	<div class="banner-wrap">
+		<ul id="banner-box">
+			<li><img src="topics1.png"></li>
+			<li><img src="topics2.png"></li>
+			<li><img src="topics3.png"></li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript" src="EventUtil.js"></script>
+<script type="text/javascript">
+	function moveObj(ele,pos) {
+		ele.style.left = pos + 'px';
+    }
+    function interMove() {
+        var ele = document.getElementById("banner-box");
+		var curPos = ele.style.left.slice(0,-2);
+		if (curPos == 0){
+            moveObj(ele,-68);
+		}else if(curPos == -68){
+            moveObj(ele,-136);
+		}else{
+            moveObj(ele,0);
+		}
+    }
+    window.onload = function () {
+	    var tar = document.getElementsByClassName("banner-switch")[0],
+			ele = document.getElementById("banner-box");
+	    EventUtil.addHandler(tar,'click',function (e) {
+			if(e.target.getAttribute("data-img") == 0){
+                moveObj(ele,0);
+			}else if(e.target.getAttribute("data-img") == 1){
+                moveObj(ele,-68);
+            }else if(e.target.getAttribute("data-img") == 2){
+                moveObj(ele,-136);
+            }
+            EventUtil.stopPropagation(e);
+            EventUtil.preventDefault(e);
+        });
+		var t1 = window.setInterval("interMove()",5000);
+    }
+</script>
+</body>
+
+</html>
