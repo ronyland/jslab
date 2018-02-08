@@ -33,13 +33,14 @@
 	function moveObj(ele,pos) {
 		ele.style.left = pos + 'px';
     }
-    function interMove() {
-        var ele = document.getElementById("banner-box");
+    function interMove(eleId,distance) {
+        var ele = document.getElementById(eleId);
+        console.log(eleId,distance,ele);
 		var curPos = ele.style.left.slice(0,-2);
 		if (curPos == 0){
-            moveObj(ele,-68);
-		}else if(curPos == -68){
-            moveObj(ele,-136);
+            moveObj(ele,distance);
+		}else if(curPos == distance){
+            moveObj(ele,distance*2);
 		}else{
             moveObj(ele,0);
 		}
@@ -58,7 +59,7 @@
             EventUtil.stopPropagation(e);
             EventUtil.preventDefault(e);
         });
-		var t1 = window.setInterval("interMove()",5000);
+		var t1 = window.setInterval("interMove("+"'banner-box',"+"-68"+")",1000);
     }
 </script>
 </body>
